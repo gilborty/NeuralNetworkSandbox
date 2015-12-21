@@ -14,7 +14,9 @@ struct Connection
 
 class Neuron
 {
+
 public:
+	using Layer = std::vector<Neuron>;
 
 	Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex );
 
@@ -29,8 +31,8 @@ public:
 	void feedForward( const Layer& previousLayer );
 
 private:
-	static double m_eta;		//[0.0, 1.0] overall net training rate
-	static double m_alpha;    //[0.0, n] multiplier of the last weight change (i.e. momentum)
+	const double m_eta;		//[0.0, 1.0] overall net training rate
+	const double m_alpha;    //[0.0, n] multiplier of the last weight change (i.e. momentum)
 	double m_outputValue;
 	unsigned int m_neuronIndex;
 

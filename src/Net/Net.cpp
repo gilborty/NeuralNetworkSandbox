@@ -6,7 +6,7 @@ Net::Net( const std::vector<unsigned int>& topology )
 
 	for( unsigned int layerNumber = 0; layerNumber < numberOfLayers; ++layerNumber )
 	{
-		m_layers.push_back( Layer() );
+		m_layers.push_back( Neuron::Layer() );
 
 		unsigned int numberOfOuptuts = layerNumber == topology.size() - 1 ? 0: topology[ layerNumber + 1 ];
 		//We have made a new layer, now fill it with neurons,
@@ -17,6 +17,8 @@ Net::Net( const std::vector<unsigned int>& topology )
 			std::cout << "Made a neuron." << std::endl;
 		}
 
+		//Force the bias neuron's output value to one. It's the last neuron created above
+		m_layers.back().back().setOutputValue( 1.0 );
 	}
 }
 
@@ -36,7 +38,7 @@ void Net::backProp( const std::vector<double>& targetValues )
 	//Trying to minimze this during backProp()
 
 	//TODO implement RMS error function
-	Layer& outputLayer = m_layers.back();
+	Neuron::Layer& outputLayer = m_layers.back();
 	m_error = 0.0;
 
 	for( unsigned int n = 0; n < outputLayer.size() - 1; ++n )
@@ -62,10 +64,10 @@ void Net::backProp( const std::vector<double>& targetValues )
 	}
 
 	//Calculate hidden layer gradients
-	for( unsigned int layerNumber = m_layers.size() - 2; layerNum > 0; --layerNumber )
+	for( unsigned int layerNumber = m_layers.size() - 2; layerNumber > 0; --layerNumber )
 	{
-		Layer& hiddenLayer = m_layers[layerNumber];
-		Layer& nextLayer = m_layers[layerNumber + 1];
+		Neuron::Layer& hiddenLayer = m_layers[layerNumber];
+		Neuron::Layer& nextLayer = m_layers[layerNumber + 1];
 
 		for( unsigned int n = 0; n < hiddenLayer.size(); ++n )
 		{
@@ -77,8 +79,8 @@ void Net::backProp( const std::vector<double>& targetValues )
 	//update the connection weights
 	for( unsigned int layerNumber = m_layers.size() - 1; layerNumber > 0; --layerNumber )
 	{
-		Layer& currentLayer = m_layers[layerNumber];
-		Layer& previousLayer = m_layers[layerNumber - 1];
+		Neuron::Layer& currentLayer = m_layers[layerNumber];
+		Neuron::Layer& previousLayer = m_layers[layerNumber - 1];
 
 		for( unsigned int n = 0; n < currentLayer.size() - 1; ++n )
 		{
@@ -103,7 +105,7 @@ void Net::feedForward( const std::vector<double>& inputValues )
 	//Forward propagate
 	for( unsigned int layerNumber = 0; layerNumber < inputValues.size(); ++layerNumber )
 	{
-		Layer& previousLayer = m_layers[ layerNumber - 1 ];
+		Neuron::Layer& previousLayer = m_layers[ layerNumber - 1 ];
 
 		for( unsigned int n = 0; n < m_layers[ layerNumber ].size() - 1; ++n )
 		{
