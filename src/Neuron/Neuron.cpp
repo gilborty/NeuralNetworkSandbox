@@ -13,6 +13,33 @@ Neuron::Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex )
 	m_neuronIndex = neuronIndex;
 }
 
+double Neuron::sumDOW( const Layer& nextLayer ) const
+{
+	double sum = 0.0;
+
+	//Sum our contributions of the errors at the nodes we feed
+
+	for( unsigned int n = 0; n < nextLayer.size() - 1; ++n )
+	{
+		sum += m_outputWeights[n].weight * nextLayer[n].m_gradient;
+	}
+
+	return sum;
+}
+
+void Neuron::calculateOutputGradients( double targetValue )
+{
+	double delta = targetValue - m_outputValue;
+	m_gradient = delta * transferFunctionDerivative( m_outputValue );
+}
+
+void Neuron::calculateHiddenGradients( const Layer& nextLayer )
+{
+	double dow = sumDOW( nextLayer );
+	m_gradient = dow * transferFunctionDerivative( m_outputValue );
+
+}
+
 double Neuron::transferFunction( double x )
 {
 	//Hyperbolic tan: tanh
