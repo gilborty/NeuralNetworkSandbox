@@ -24,9 +24,13 @@ public:
 	void calculateOutputGradients( double targetValue );
 	void calculateHiddenGradients( const Layer& nextLayer );
 
+	void updateInputWeights( Layer& previousLayer );
+
 	void feedForward( const Layer& previousLayer );
 
 private:
+	static double m_eta;		//[0.0, 1.0] overall net training rate
+	static double m_alpha;    //[0.0, n] multiplier of the last weight change (i.e. momentum)
 	double m_outputValue;
 	unsigned int m_neuronIndex;
 

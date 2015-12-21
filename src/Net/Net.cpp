@@ -20,6 +20,11 @@ Net::Net( const std::vector<unsigned int>& topology )
 	}
 }
 
+void Net::getResults( std::vector<double>& resultValues ) const
+{
+
+}
+
 void Net::backProp( const std::vector<double>& targetValues )
 {
 	//Calculate overall net error (e.g. RMS)

@@ -1,6 +1,8 @@
 #include "Neuron.h"
 
 Neuron::Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex )
+	: m_eta( 0.15 )
+	, m_alpha( 0.5 )
 {
 	for( unsigned int connections = 0; connections < numberOfOuptuts; ++connections )
 	{
@@ -11,6 +13,30 @@ Neuron::Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex )
 	}
 
 	m_neuronIndex = neuronIndex;
+}
+
+void Neuron::updateInputWeights( Layer& previousLayer )
+{
+	//The weights to be updated are in the Connection container in the neurons in the previous layer
+
+	for( unsigned int n = 0; n < previousLayer.size(); ++n )
+	{
+		Neuron& neuron = previousLayer[n];
+
+		double oldDeltaWeight = neuron.m_outputWeights[m_neuronIndex].deltaWeight;
+
+		double newDeltaWeight =
+				//Individual input, magnified by the gradient and train rate
+				m_eta
+				* neuron.getOutputValue()
+				* m_gradient
+				//Also add momentum, a fraction of the previous delta weight
+				+ m_alpha
+				* oldDeltaWeight;
+
+		neuron.m_outputWeights[m_neuronIndex].deltaWeight = newDeltaWeight;
+		neuron.m_outputWeights[m_neuronIndex].weight += newDeltaWeight;
+	}
 }
 
 double Neuron::sumDOW( const Layer& nextLayer ) const

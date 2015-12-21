@@ -19,7 +19,7 @@ public:
 
 	void backProp( const std::vector<double>& targetValues );
 
-	void getResults( std::vector<double>& resultValues ) const {};
+	void getResults( std::vector<double>& resultValues ) const;
 
 private:
 	double m_error;
