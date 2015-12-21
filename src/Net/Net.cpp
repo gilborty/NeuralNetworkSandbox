@@ -38,12 +38,30 @@ void Net::backProp( const std::vector<double>& targetValues )
 	m_error /= outputLayer.size() - 1;
 	m_error = sqrt( m_error );
 
-
+	//Implement a recent average error measurement
+	//TODO actually implement as a function
+	m_recentAverageError = ( m_recentAverageError * m_recentAverageSmoothingFactor + m_error )
+							/ (m_recentAverageSmoothingFactor + 1.0 );
 
 
 	//Calculate output layer gradients
+	for( unsigned int n = 0; n < outputLayer.size() - 1; ++n )
+	{
+		outputLayer[n].calculateOutputGradients( targetValues[n] );
+
+	}
 
 	//Calculate hidden layer gradients
+	for( unsigned int layerNumber = m_layers.size() - 2; layerNum > 0; --layerNumber )
+	{
+		Layer& hiddenLayer = m_layers[layerNumber];
+		Layer& nextLayer = m_layers[layerNumber + 1];
+
+		for( unsigned int n = 0; n < hiddenLayer.size(); ++n )
+		{
+			hiddenLayer[n].calculateHiddenGradients( nextLayer );
+		}
+	}
 
 	//For all layers from outputs to first hidden layer
 	//update the connection weights

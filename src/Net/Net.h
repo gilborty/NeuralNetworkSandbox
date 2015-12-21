@@ -23,6 +23,8 @@ public:
 
 private:
 	double m_error;
+	double m_recentAverageError;
+	double m_recentAverageSmoothingFactor;
 	std::vector<Layer> m_layers; //m_layers[layerNumber][neuronNumber]
 
 };
