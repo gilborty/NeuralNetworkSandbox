@@ -13,7 +13,7 @@ class Neuron
 {
 public:
 
-	Neuron( unsigned int numberOfOuptuts );
+	Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex );
 
 	void setOutputValue( double value ) { m_outputValue = value; }
 	double getOutputValue() const { return m_outputValue; }
@@ -22,6 +22,7 @@ public:
 
 private:
 	double m_outputValue;
+	unsigned int m_neuronIndex;
 	std::vector<Connection> m_outputWeights;
 
 	static double randomWeight() { return rand() / double( RAND_MAX ); }
