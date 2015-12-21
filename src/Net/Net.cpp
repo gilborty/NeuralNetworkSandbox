@@ -20,6 +20,36 @@ Net::Net( const std::vector<unsigned int>& topology )
 	}
 }
 
+void Net::backProp( const std::vector<double>& targetValues )
+{
+	//Calculate overall net error (e.g. RMS)
+	//Trying to minimze this during backProp()
+
+	//TODO implement RMS error function
+	Layer& outputLayer = m_layers.back();
+	m_error = 0.0;
+
+	for( unsigned int n = 0; n < outputLayer.size() - 1; ++n )
+	{
+		double delta = targetValues[n] - outputLayer[n].getOutputValue();
+		m_error += delta * delta;
+	}
+
+	m_error /= outputLayer.size() - 1;
+	m_error = sqrt( m_error );
+
+
+
+
+	//Calculate output layer gradients
+
+	//Calculate hidden layer gradients
+
+	//For all layers from outputs to first hidden layer
+	//update the connection weights
+
+}
+
 void Net::feedForward( const std::vector<double>& inputValues )
 {
 	//Make sure that the input values are equal to the number of neurons in first layer minus the additional bias neuron
@@ -28,7 +58,7 @@ void Net::feedForward( const std::vector<double>& inputValues )
 	//Assign (latch) the input values into the input neurons
 	for( unsigned i = 0; i < inputValues.size(); ++i )
 	{
-		m_layers[0][i].setOutputValue( inputValue[i] );
+		m_layers[0][i].setOutputValue( inputValues[i] );
 
 	}
 

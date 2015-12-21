@@ -15,14 +15,14 @@ public:
 	Net( const std::vector<unsigned int>& topology );
 
 	//Public member functions
-	void feedForward( const std::vector<double>& inputValues ) {};
+	void feedForward( const std::vector<double>& inputValues );
 
-	void backProp( const std::vector<double>& targetValues ) {};
+	void backProp( const std::vector<double>& targetValues );
 
 	void getResults( std::vector<double>& resultValues ) const {};
 
 private:
-	
+	double m_error;
 	std::vector<Layer> m_layers; //m_layers[layerNumber][neuronNumber]
 
 };
