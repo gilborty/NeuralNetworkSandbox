@@ -22,7 +22,12 @@ Net::Net( const std::vector<unsigned int>& topology )
 
 void Net::getResults( std::vector<double>& resultValues ) const
 {
+	resultValues.clear();
 
+	for( unsigned int n = 0; n < m_layers.back().size() - 1; ++n )
+	{
+		resultValues.push_back( m_layers.back()[n].getOutputValue() );
+	}
 }
 
 void Net::backProp( const std::vector<double>& targetValues )
