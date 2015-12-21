@@ -3,8 +3,12 @@
 
 #include <vector>
 
+std::string dataFile = "data/trainingData.txt";
+
 int main( int argc, char** argv )
 {
+	TrainingData trainData( dataFile );
+
 	//Construct the network
 	std::vector<unsigned int> topology;
 

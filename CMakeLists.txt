@@ -6,9 +6,11 @@ set(CMAKE_CXX_FLAGS -std=c++11)
 include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/Net")
 include_directories("${PROJECT_SOURCE_DIR}/src/Neuron")
+include_directories("${PROJECT_SOURCE_DIR}/src/TrainingData")
 
 file(GLOB SOURCES "src/*.cpp"
                   "src/Net/*.cpp"
-                  "src/Neuron/*.cpp")
+                  "src/Neuron/*.cpp"
+                  "src/TrainingData/*.cpp")
 
 add_executable(NeuralNetworkSandbox ${SOURCES})
