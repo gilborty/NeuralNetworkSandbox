@@ -35,9 +35,11 @@ void Net::feedForward( const std::vector<double>& inputValues )
 	//Forward propagate
 	for( unsigned int layerNumber = 0; layerNumber < inputValues.size(); ++layerNumber )
 	{
+		Layer& previousLayer = m_layers[ layerNumber - 1 ];
+
 		for( unsigned int n = 0; n < m_layers[ layerNumber ].size() - 1; ++n )
 		{
-			m_layers[layerNumber][n].feedForward();
+			m_layers[layerNumber][n].feedForward( previousLayer );
 		}
 	}
 
