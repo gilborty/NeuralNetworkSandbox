@@ -1,4 +1,6 @@
 #include "Net.h"
+#include "Neuron.h"
+
 #include <vector>
 
 int main( int argc, char** argv )

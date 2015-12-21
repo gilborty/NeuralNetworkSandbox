@@ -2,8 +2,9 @@
 
 #include <iostream>
 #include <vector>
+#include <cassert>
 
-class Neuron{};
+#include "Neuron.h"
 
 using Layer = std::vector<Neuron>;
 
