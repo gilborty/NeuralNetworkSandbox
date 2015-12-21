@@ -19,6 +19,9 @@ public:
 
 	void getResults( std::vector<double>& resultValues ) const;
 
+	double getRecentAverageError() const { return m_recentAverageError; }
+
+
 private:
 	double m_error;
 	double m_recentAverageError;
