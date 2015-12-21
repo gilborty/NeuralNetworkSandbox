@@ -13,6 +13,20 @@ Neuron::Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex )
 	m_neuronIndex = neuronIndex;
 }
 
+double Neuron::transferFunction( double x )
+{
+	//Hyperbolic tan: tanh
+	//Output range [-1.0, 1.0]
+
+	return tanh( x );
+}
+
+double Neuron::transferFunctionDerivative( double x )
+{
+	//Use approximation, actual is 1 - tanh^2( x )
+	return 1.0 - x * x;
+}
+
 void Neuron::feedForward( const Layer& previousLayer )
 {
 	//Sum up the inputs
@@ -23,8 +37,11 @@ void Neuron::feedForward( const Layer& previousLayer )
 
 	for( unsigned int n = 0; n < previousLayer.size(); ++n )
 	{
-		sum += previousLayer[n].getOutputValue() * previousLayer[n].m_outputWeights[ m_neuronIndex ].weight
+		sum += previousLayer[n].getOutputValue() *
+				previousLayer[n].m_outputWeights[ m_neuronIndex ].weight;
 	}
+
+	m_outputValue = transferFunction( sum );
 
 
 

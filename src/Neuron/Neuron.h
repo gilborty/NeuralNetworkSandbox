@@ -2,6 +2,9 @@
 
 #include <cstdlib>
 #include <vector>
+#include <cmath>
+
+
 //TODO have connection implement random weight
 struct Connection
 {
@@ -25,6 +28,8 @@ private:
 	unsigned int m_neuronIndex;
 	std::vector<Connection> m_outputWeights;
 
+	static double transferFunction( double x );
+	static double transferFunctionDerivative( double x );
 	static double randomWeight() { return rand() / double( RAND_MAX ); }
 
 };
