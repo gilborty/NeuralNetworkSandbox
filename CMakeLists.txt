@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 project(NeuralNetworkSandbox)
 
 set(CMAKE_CXX_FLAGS -std=c++11)
@@ -14,3 +14,5 @@ file(GLOB SOURCES "src/*.cpp"
                   "src/TrainingDataHandler/*.cpp")
 
 add_executable(NeuralNetworkSandbox ${SOURCES})
+
+file(COPY "${PROJECT_SOURCE_DIR}/data" DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
