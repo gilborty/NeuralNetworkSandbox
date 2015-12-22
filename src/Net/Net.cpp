@@ -1,14 +1,18 @@
 #include "Net.h"
 
 Net::Net( const std::vector<unsigned int>& topology )
+	: m_error( 0.0 )
+	, m_recentAverageError( 0.0 )
+	, m_recentAverageSmoothingFactor( 0.5 )
 {
 	unsigned int numberOfLayers = topology.size();
 
 	for( unsigned int layerNumber = 0; layerNumber < numberOfLayers; ++layerNumber )
 	{
 		m_layers.push_back( Neuron::Layer() );
+		std::cout << "Created a layer" << std::endl;
 
-		unsigned int numberOfOuptuts = layerNumber == topology.size() - 1 ? 0: topology[ layerNumber + 1 ];
+		unsigned int numberOfOuptuts = layerNumber == topology.size() - 1 ? 0 : topology[ layerNumber + 1 ];
 		//We have made a new layer, now fill it with neurons,
 		//and add a bias neuron to the layer:
 		for( unsigned int neuronNumber = 0; neuronNumber <= topology[ layerNumber ]; ++neuronNumber )
@@ -49,6 +53,7 @@ void Net::backProp( const std::vector<double>& targetValues )
 
 	m_error /= outputLayer.size() - 1;
 	m_error = sqrt( m_error );
+	std::cout << "Error: " << m_error << std::endl;
 
 	//Implement a recent average error measurement
 	//TODO actually implement as a function
@@ -69,7 +74,7 @@ void Net::backProp( const std::vector<double>& targetValues )
 		Neuron::Layer& hiddenLayer = m_layers[layerNumber];
 		Neuron::Layer& nextLayer = m_layers[layerNumber + 1];
 
-		for( unsigned int n = 0; n < hiddenLayer.size(); ++n )
+		for( unsigned int n = 0; n < m_layers[layerNumber].size() - 1; ++n )
 		{
 			hiddenLayer[n].calculateHiddenGradients( nextLayer );
 		}
@@ -95,15 +100,16 @@ void Net::feedForward( const std::vector<double>& inputValues )
 	//Make sure that the input values are equal to the number of neurons in first layer minus the additional bias neuron
 	assert( inputValues.size() == m_layers[0].size() - 1 );
 
+
 	//Assign (latch) the input values into the input neurons
-	for( unsigned i = 0; i < inputValues.size(); ++i )
+	for( unsigned int i = 0; i < inputValues.size(); ++i )
 	{
 		m_layers[0][i].setOutputValue( inputValues[i] );
-
 	}
 
+
 	//Forward propagate
-	for( unsigned int layerNumber = 0; layerNumber < inputValues.size(); ++layerNumber )
+	for( unsigned int layerNumber = 1; layerNumber < m_layers.size(); ++layerNumber )
 	{
 		Neuron::Layer& previousLayer = m_layers[ layerNumber - 1 ];
 

@@ -6,11 +6,11 @@
 #include <sstream>
 #include <vector>
 
-class TrainingData
+class TrainingDataHandler
 {
 public:
 
-	TrainingData( const std::string trainingDataFile );
+	TrainingDataHandler( const std::string trainingDataFile );
 
 	bool isEndOfFile() { return m_trainingDataFile.eof(); }
 	void getTopology( std::vector<unsigned int>& topology );

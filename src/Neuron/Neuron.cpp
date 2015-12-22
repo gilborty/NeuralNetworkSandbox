@@ -7,7 +7,6 @@ Neuron::Neuron( unsigned int numberOfOuptuts, unsigned int neuronIndex )
 	for( unsigned int connections = 0; connections < numberOfOuptuts; ++connections )
 	{
 		m_outputWeights.push_back( Connection() );
-
 		//Set weight to random
 		m_outputWeights.back().weight = randomWeight();
 	}
@@ -77,7 +76,7 @@ double Neuron::transferFunction( double x )
 double Neuron::transferFunctionDerivative( double x )
 {
 	//Use approximation, actual is 1 - tanh^2( x )
-	return 1.0 - x * x;
+	return 1.0 - tanh( x ) * tanh( x );
 }
 
 void Neuron::feedForward( const Layer& previousLayer )
@@ -96,6 +95,5 @@ void Neuron::feedForward( const Layer& previousLayer )
 
 	m_outputValue = transferFunction( sum );
 
-
-
+	//std::cout << "Output value: " << m_outputValue << std::endl;
 }

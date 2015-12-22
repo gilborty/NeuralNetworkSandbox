@@ -1,11 +1,11 @@
-#include "TrainingData.h"
+#include "TrainingDataHandler.h"
 
-TrainingData::TrainingData( const std::string trainingDataFile )
+TrainingDataHandler::TrainingDataHandler( const std::string trainingDataFile )
 {
 	m_trainingDataFile.open( trainingDataFile.c_str() );
 }
 
-void TrainingData::getTopology( std::vector<unsigned int>& topology )
+void TrainingDataHandler::getTopology( std::vector<unsigned int>& topology )
 {
 	std::string line;
 	std::string label;
@@ -31,7 +31,7 @@ void TrainingData::getTopology( std::vector<unsigned int>& topology )
 	return;
 }
 
-unsigned int TrainingData::getNextInputs( std::vector<double>& inputValues )
+unsigned int TrainingDataHandler::getNextInputs( std::vector<double>& inputValues )
 {
 	inputValues.clear();
 
@@ -53,7 +53,7 @@ unsigned int TrainingData::getNextInputs( std::vector<double>& inputValues )
 	return inputValues.size();
 }
 
-unsigned int TrainingData::getTargetOutputs( std::vector<double>& targetOutputValues )
+unsigned int TrainingDataHandler::getTargetOutputs( std::vector<double>& targetOutputValues )
 {
 	targetOutputValues.clear();
 

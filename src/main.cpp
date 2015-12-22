@@ -1,6 +1,6 @@
 #include "Net.h"
 #include "Neuron.h"
-#include "TrainingData.h"
+#include "TrainingDataHandler.h"
 
 #include <vector>
 
@@ -20,7 +20,7 @@ void showVectorValues( std::string label, std::vector<double>& vectorIn )
 
 int main( int argc, char** argv )
 {
-	TrainingData trainingData( dataFile );
+	TrainingDataHandler trainingData( dataFile );
 
 	//Construct the network
 	std::vector<unsigned int> topology;
@@ -35,7 +35,7 @@ int main( int argc, char** argv )
 	while( !trainingData.isEndOfFile() )
 	{
 		++trainingPass;
-		std::cout << "Pass number: " << trainingPass << std::endl;
+		std::cout << "Pass number " << trainingPass;
 
 		//Get new input data and feed it forward
 		if( trainingData.getNextInputs( inputValues ) != topology[0] )
@@ -59,6 +59,8 @@ int main( int argc, char** argv )
 		//Report back on how well it is doing
 		std::cout << "Net recent average error: "
 					<< network.getRecentAverageError() << std::endl;
+		std::cout << std::endl;
+
 
 
 	}
