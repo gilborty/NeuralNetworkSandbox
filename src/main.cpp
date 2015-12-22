@@ -10,9 +10,9 @@ void showVectorValues( std::string label, std::vector<double>& vectorIn )
 {
 	std::cout << label << " ";
 
-	for( unsigned int i = 0; i < vectorIn.size(); ++i )
+	for( auto value : vectorIn )
 	{
-		std::cout << vectorIn[i] << " ";
+		std::cout << value << " ";
 	}
 
 	std::cout << std::endl;
